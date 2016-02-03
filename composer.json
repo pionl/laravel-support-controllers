@@ -2,8 +2,10 @@
   "name": "pion/laravel-support-controllers",
   "description": "A set of support classes/traits for Laravel Controller",
   "require": {
-    "illuminate/support": "5.1.*",
-    "atorscho/crumbs": "2.1.5"
+    "illuminate/support": "5.*"
+  },
+  "suggest": {
+    "atorscho/crumbs": "Required to use with CrumbsNavigationTrait (~2.1.5) and laravel framework (5.1.*)."
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8"
