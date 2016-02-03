@@ -2,7 +2,18 @@
 
 ## Requirements
 
-- Laravel 5.1+ (5.2 is not supported due the Crumbs not updated yet)
+- Laravel 5.1+ or 5.2+ (5.2 is not supported when the Crumbs is - not updated yet)
+
+## Install
+
+Without Crumbs
+
+    composer require pion/laravel-support-controllers
+    
+With Crumbs
+
+    composer require pion/laravel-support-controllers
+    composer require atorscho/crumbs 2.1.5
 
 ## URLTrait
 Adds a new set of protected functions for the current controller. Enables getting the
