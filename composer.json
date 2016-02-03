@@ -1,0 +1,32 @@
+{
+  "name": "pion/laravel-support-controllers",
+  "description": "A set of support classes/traits for Laravel Controller",
+  "require": {
+    "illuminate/support": "5.1.*",
+    "atorscho/crumbs": "2.1.5"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pion\\Support\\Controllers\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\" : "tests/"
+    },
+    "classmap": [
+      "tests/Mock/URL.php"
+    ]
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Martin Kluska",
+      "email": "martin.kluska@imakers.cz"
+    }
+  ],
+  "minimum-stability": "stable"
+}
