@@ -33,7 +33,7 @@ trait AbstractNavigationTrait
     /**
      * Generates the navigation with list support.
      * @param string|null   $title              you can provide model to use as modelForShow. Title will have null value
-     * @param Model|null    $modelForShow      indicates if we want to show a model with show url
+     * @param NavigationModelTrait|null    $modelForShow      indicates if we want to show a model with show url
      */
     protected function createNavigation($title = null, $modelForShow = null)
     {
@@ -53,6 +53,9 @@ trait AbstractNavigationTrait
 
             // add the current index url
             if ($hasList) {
+                $this->beforeAddingListNavigation($title, $modelForShow);
+
+                // add the navigation to the list
                 $this->addCrumbNavigationToList($this->listTitle);
             }
 
@@ -60,18 +63,24 @@ trait AbstractNavigationTrait
             if (is_object($modelForShow) && is_string($this->detailModelAction)
                 && method_exists($this, $this->detailModelAction)) {
 
+                // call action before we add the model navigation
+                $this->beforeAddingModelActionNavigation($modelForShow, $title);
+
                 // get the current action url
                 $detailAction = $this->getCurrentActionURL($this->detailModelAction, [
                     $modelForShow->getKey()
                 ]);
 
-                $this->addNavigation($detailAction, $modelForShow->getName());
+                // adds the crumb navigation for the model
+                $added = $this->addCrumbNavigationForModel($detailAction, $modelForShow);
 
-                // if current model action is same as current url we must disable
-                // the add current method
-                $currentUrl = $this->getCurrentFullURL();
-                if ($detailAction === $currentUrl) {
-                    $title = null;
+                if ($added) {
+                    // if current model action is same as current url we must disable
+                    // the add current method
+                    $currentUrl = $this->getCurrentFullURL();
+                    if ($detailAction === $currentUrl) {
+                        $title = null;
+                    }
                 }
             }
 
@@ -81,6 +90,23 @@ trait AbstractNavigationTrait
             }
         }
     }
+
+    /**
+     * Triggered before adding a list navigation. Called only if list page is supported
+     * 
+     * @param string|null $title
+     * @param NavigationModelTrait|null $modelToShow
+     */
+    protected function beforeAddingListNavigation($title = null, $modelToShow = null) {}
+
+
+    /**
+     * Triggered before the the model action is addded (edit/show/etc)
+     *
+     * @param NavigationModelTrait $model
+     * @param string|null $title
+     */
+    protected function beforeAddingModelActionNavigation($model, $title = null) {}
 
     /**
      * Ads a current index action with given title to navigation
@@ -93,6 +119,19 @@ trait AbstractNavigationTrait
     {
         $this->addNavigation($this->getCurrentActionURL($this->listModelAction), $title);
         return $this;
+    }
+
+    /**
+     * Adds a navigation entry for the model
+     * @param string $url
+     * @param NavigationModelTrait $model
+     *
+     * @return bool if the navigation was created
+     */
+    protected function addCrumbNavigationForModel($url, $model)
+    {
+        $this->addNavigation($url, $model->getName());
+        return true;
     }
 
     /**

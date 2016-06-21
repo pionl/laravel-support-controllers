@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Laravel 5.1+ or 5.2+ (5.2 is not supported when the Crumbs is - not updated yet)
+- Laravel 5.1+ or 5.2+
 
 ## Install
 
@@ -13,7 +13,7 @@ Without Crumbs
 With Crumbs
 
     composer require pion/laravel-support-controllers
-    composer require atorscho/crumbs 2.1.5
+    composer require atorscho/crumbs 2.2
 
 ## URLTrait
 Adds a new set of protected functions for the current controller. Enables getting the
@@ -51,6 +51,28 @@ Result: list page -> name -> Edit
 Result: list page -> name
 
 etc.
+
+## Customizations
+
+You can change some properties:
+- `$listModelAction` the controllers action name for a list
+- `$detailModelAction` the controllers action name for the detail action (default is show, can be edit if not supported)
+- `$listTitle` the title for the list 
+
+You can handle some states when the createNavigation is triggered:
+
+### beforeAddingListNavigation($title = null, $modelToShow = null)
+Triggered before adding a list navigation. Called only if list page is supported
+
+### beforeAddingModelActionNavigation($model, $title = null)
+Triggered before the model action is added (edit/show/etc)
+
+### addCrumbNavigationToList
+Calls the addNavigation with list action
+
+### addCrumbNavigationForModel
+Calls the addNavigation with given url and the model names, method must return bool if the navigation was added.
+
 
 ## CrumbsNavigationTrait
 

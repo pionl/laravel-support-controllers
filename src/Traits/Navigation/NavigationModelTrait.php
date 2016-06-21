@@ -15,4 +15,10 @@ trait NavigationModelTrait
      * @return string
      */
     abstract public function getName();
+
+    /**
+     * Returns the id for the object, defaulty implemented by the Eloquent model
+     * @return int
+     */
+    abstract public function getKey();
 }
